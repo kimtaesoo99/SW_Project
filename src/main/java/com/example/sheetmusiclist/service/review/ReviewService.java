@@ -1,15 +1,15 @@
 package com.example.sheetmusiclist.service.review;
 
 
-import com.example.sheetmusiclist.SheetmusicListApplication;
-import com.example.sheetmusiclist.dto.review.CreateReviewRequestDto;
-import com.example.sheetmusiclist.dto.review.EditReviewRequestDto;
-import com.example.sheetmusiclist.dto.review.findReviewResponseDto;
+import com.example.sheetmusiclist.config.auth.review.CreateReviewRequestDto;
+import com.example.sheetmusiclist.config.auth.review.EditReviewRequestDto;
+import com.example.sheetmusiclist.config.auth.review.findReviewResponseDto;
 import com.example.sheetmusiclist.entity.member.Member;
 import com.example.sheetmusiclist.entity.review.Review;
-import com.example.sheetmusiclist.exception.ReviewNotFoundException;
-import com.example.sheetmusiclist.exception.UserNotEqualsException;
+import com.example.sheetmusiclist.entity.sheetmusic.SheetMusic;
+import com.example.sheetmusiclist.exception.*;
 import com.example.sheetmusiclist.repository.review.ReviewRepository;
+import com.example.sheetmusiclist.repository.sheetmusic.SheetMusicRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,38 +22,53 @@ import java.util.List;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
 
-//    private final SheetMusicRepository sheetMusicRepository;
+    private final SheetMusicRepository sheetMusicRepository;
     //리뷰를 작성, 리뷰를 수정, 리뷰 삭제, 리뷰보기(한 정보에 대해)
 
     //리뷰 작성
     @Transactional
-    public void createReview(Member member,CreateReviewRequestDto req){
-        Review review = new Review(member,req.getComment(),req.getRate());
+    public void createReview(Long id, Member member,CreateReviewRequestDto req){
+
+        SheetMusic sheetmusic = sheetMusicRepository.findById(id).orElseThrow(SheetMusicNotFoundException::new);
+        Review review = new Review(member, sheetmusic, req.getComment(), req.getRate());
         reviewRepository.save(review);
     }
 
     //리뷰 수정
     @Transactional
-    public void editReview(Member member,Long id,EditReviewRequestDto req){
-        Review review = reviewRepository.findById(id).orElseThrow(ReviewNotFoundException::new);
-        if (!member.equals(review.getMember()))throw new UserNotEqualsException();
-        review.editReview(req.getComment(),req.getRate());
+    public void editReview(Member member, Long sheetmusicid, Long reviewid,
+                           EditReviewRequestDto req) {
+        SheetMusic sheetMusic = sheetMusicRepository.findById(sheetmusicid).orElseThrow(SheetMusicNotFoundException::new);
+        Review review = reviewRepository.findById(reviewid).orElseThrow(ReviewNotFoundException::new);
+        if (!member.getName().equals(review.getMember().getName())) {
+            throw new MemberNotEqualsException();
+        }
+        review.editReview(req.getComment(), req.getRate());
     }
-    //리뷰 보기 수정해야함
+    //리뷰 전체 조회(by 악보)
     @Transactional(readOnly = true)
     public List<findReviewResponseDto> findReviews(Long id){
-//        Sheetmusic sheetmusic = sheetMusicRepository.findById(id).get();
-//        List<Review> reviews = reviewRepository.findAllBySheetMusic(sheetmusic);
+        SheetMusic sheetmusic = sheetMusicRepository.findById(id).orElseThrow(SheetMusicNotFoundException::new);
+        List<Review> reviews = reviewRepository.findAllBySheetmusic(sheetmusic);
         List<findReviewResponseDto> result = new ArrayList<>();
-//        reviews.forEach(s->result.add(findReviewResponseDto.toDto(s)));
+        for (Review review : reviews) {
+            result.add(findReviewResponseDto.toDto(review));
+        }
         return result;
     }
     //리뷰 삭제
     @Transactional
-    public void deleteReview(Member member, Long id){
-        Review review = reviewRepository.findById(id).get();
-        if (!member.equals(review.getMember()))throw new UserNotEqualsException();
-        reviewRepository.delete(review);
+    public void deleteReview(Long sheetmusicid, Long reviewid, Member member){
+        SheetMusic sheetMusic = sheetMusicRepository.findById(sheetmusicid).orElseThrow(SheetMusicNotFoundException::new);
+        Review review = reviewRepository.findById(reviewid).orElseThrow(ReviewNotFoundException::new);
+
+        if (!member.getName().equals(review.getMember().getName())) {
+            throw new MemberNotEqualsException();
+        }
+        reviewRepository.deleteById(reviewid);
+        //reviewRepository.delete(review);
+        // 위에 작성한게 더 효율적이지 않음?
+
     }
 
 }

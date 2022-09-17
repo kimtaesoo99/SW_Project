@@ -1,4 +1,4 @@
-package com.example.sheetmusiclist.dto.review;
+package com.example.sheetmusiclist.config.auth.review;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

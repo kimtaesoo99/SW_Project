@@ -1,4 +1,4 @@
-package com.example.sheetmusiclist.dto.review;
+package com.example.sheetmusiclist.config.auth.review;
 
 
 import com.example.sheetmusiclist.entity.review.Review;
