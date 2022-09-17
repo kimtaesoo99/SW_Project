@@ -2,6 +2,7 @@ package com.example.sheetmusiclist.entity.review;
 
 import com.example.sheetmusiclist.entity.common.EntityDate;
 import com.example.sheetmusiclist.entity.member.Member;
+import com.example.sheetmusiclist.entity.sheetmusic.SheetMusic;
 import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,6 +29,11 @@ public class Review extends EntityDate {
     @JoinColumn(name = "memer_id")
     private Member member;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "sheetmusic_id")
+    private SheetMusic sheetmusic;
+
 
     @Column(nullable = false)
     private String comment;
@@ -37,8 +43,9 @@ public class Review extends EntityDate {
     @Column(nullable = false)
     private Integer rate;
 
-    public Review(Member member,String comment, Integer rate){
-        this.member =member;
+    public Review(Member member,SheetMusic sheetmusic, String comment, Integer rate){
+        this.member = member;
+        this.sheetmusic = sheetmusic;
         this.comment = comment;
         this.rate = rate;
     }
