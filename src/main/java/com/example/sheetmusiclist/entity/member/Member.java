@@ -59,5 +59,5 @@ public class Member extends EntityDate {
     public void setMoney(int money) {
         this.money = money;
     }
-    //git checkout plz plz
+    //git checkout plz plz omg
 }
