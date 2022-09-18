@@ -1,4 +1,4 @@
-package com.example.sheetmusiclist.config.auth.review;
+package com.example.sheetmusiclist.dto.review;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,10 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class EditReviewRequestDto {
+public class ReviewEditRequestDto {
+
+    @NotNull(message = "악보 정보가 잘못되었습니다.")
+    private Long sheetMusicId;
 
     @NotBlank(message = "리뷰를 작성해주세요.")
     private String comment;

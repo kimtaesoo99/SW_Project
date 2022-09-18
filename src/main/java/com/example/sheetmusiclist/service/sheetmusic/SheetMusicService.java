@@ -27,8 +27,7 @@ public class SheetMusicService {
 
     // 악보 등록
     @Transactional
-    public void createSheetMusic(SheetMusicCreateRequestDto sheetMusicCreateRequestDto,
-                                 Member member) {
+    public void createSheetMusic(SheetMusicCreateRequestDto sheetMusicCreateRequestDto, Member member) {
 
         SheetMusic sheetMusic = new SheetMusic(member, sheetMusicCreateRequestDto.getTitle(),
                 sheetMusicCreateRequestDto.getSongwriter());
@@ -66,7 +65,7 @@ public class SheetMusicService {
 
         SheetMusic sheetMusic = sheetMusicRepository.findById(id).orElseThrow(SheetMusicNotFoundException::new);
 
-        if (!sheetMusic.getMember().getName().equals(member.getName())) {
+        if (!sheetMusic.getMember().getNickname().equals(member.getNickname())) {
             throw new MemberNotEqualsException();
         }
 
@@ -79,7 +78,7 @@ public class SheetMusicService {
 
         SheetMusic sheetMusic = sheetMusicRepository.findById(id).orElseThrow(SheetMusicNotFoundException::new);
 
-        if (!sheetMusic.getMember().getName().equals(member.getName())) {
+        if (!sheetMusic.getMember().getNickname().equals(member.getNickname())) {
             throw new MemberNotEqualsException();
         }
         sheetMusicRepository.deleteById(id);

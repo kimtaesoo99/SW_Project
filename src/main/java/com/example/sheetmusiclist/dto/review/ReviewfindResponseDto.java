@@ -1,4 +1,4 @@
-package com.example.sheetmusiclist.config.auth.review;
+package com.example.sheetmusiclist.dto.review;
 
 
 import com.example.sheetmusiclist.entity.review.Review;
@@ -9,14 +9,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class findReviewResponseDto {
+public class ReviewfindResponseDto {
 
     private String user;
     private String comment;
     private Integer rate;
 
-    public static  findReviewResponseDto toDto(Review review) {
-        return new findReviewResponseDto(review.getMember().getNickname(),
+    public static ReviewfindResponseDto toDto(Review review) {
+        return new ReviewfindResponseDto(review.getMember().getNickname(),
                 review.getComment(), review.getRate());
     }
 }

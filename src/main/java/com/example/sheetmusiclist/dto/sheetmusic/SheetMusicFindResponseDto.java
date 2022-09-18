@@ -21,7 +21,7 @@ public class SheetMusicFindResponseDto {
 
 
     public static SheetMusicFindResponseDto toDto(SheetMusic sheetMusic) {
-        return new SheetMusicFindResponseDto(sheetMusic.getTitle(), sheetMusic.getSongwriter(),
+        return new SheetMusicFindResponseDto(sheetMusic.getTitle(), sheetMusic.getWriter(),
                 sheetMusic.getMember().getNickname());
     }
 }

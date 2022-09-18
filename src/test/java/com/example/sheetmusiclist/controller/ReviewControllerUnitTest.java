@@ -1,7 +1,7 @@
 package com.example.sheetmusiclist.controller;
 
-import com.example.sheetmusiclist.config.auth.review.CreateReviewRequestDto;
-import com.example.sheetmusiclist.config.auth.review.EditReviewRequestDto;
+import com.example.sheetmusiclist.dto.review.ReviewCreateRequestDto;
+import com.example.sheetmusiclist.dto.review.ReviewEditRequestDto;
 import com.example.sheetmusiclist.controller.review.ReviewController;
 import com.example.sheetmusiclist.entity.member.Member;
 import com.example.sheetmusiclist.repository.member.MemberRepository;
@@ -53,7 +53,7 @@ public class ReviewControllerUnitTest {
     public void createReviewTest()throws Exception{
         //given
         Long id  =1l;
-        CreateReviewRequestDto req = new CreateReviewRequestDto("a",4);
+        ReviewCreateRequestDto req = new ReviewCreateRequestDto("a",4);
         Member member = createMember();
         Authentication authentication = new UsernamePasswordAuthenticationToken(member.getId(), "", Collections.emptyList());
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -93,7 +93,7 @@ public class ReviewControllerUnitTest {
         //given
         Long smid  =1l;
         Long reid =1l;
-        EditReviewRequestDto req = new EditReviewRequestDto("a",4);
+        ReviewEditRequestDto req = new ReviewEditRequestDto("a",4);
         Member member = createMember();
         Authentication authentication = new UsernamePasswordAuthenticationToken(member.getId(), "", Collections.emptyList());
         SecurityContextHolder.getContext().setAuthentication(authentication);

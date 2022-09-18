@@ -28,7 +28,7 @@ public class SheetMusic extends EntityDate {
     private String title;
 
     @Column(nullable = false)
-    private String songwriter;
+    private String writer;
 
     // + 이미지 추가해야됨(pdf)
 
@@ -36,12 +36,12 @@ public class SheetMusic extends EntityDate {
     public SheetMusic(Member member, String title, String songwriter) {
         this.member = member;
         this.title = title;
-        this.songwriter = songwriter;
+        this.writer = songwriter;
     }
 
-    public SheetMusic editSheetMusic(String title, String songwriter) {
+    public SheetMusic editSheetMusic(String title, String writer) {
         this.title = title;
-        this.songwriter = songwriter;
+        this.writer = writer;
 
         return this;
     }

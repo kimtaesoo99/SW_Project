@@ -17,7 +17,7 @@ public class SheetMusicFindAllResponseDto {
     private String songwriter;
 
     public static SheetMusicFindAllResponseDto toDto(SheetMusic sheetMusic) {
-        return new SheetMusicFindAllResponseDto(sheetMusic.getTitle(), sheetMusic.getSongwriter());
+        return new SheetMusicFindAllResponseDto(sheetMusic.getTitle(), sheetMusic.getWriter());
     }
 
 }

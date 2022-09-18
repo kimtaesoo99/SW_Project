@@ -1,8 +1,8 @@
 package com.example.sheetmusiclist.service;
 
-import com.example.sheetmusiclist.config.auth.review.CreateReviewRequestDto;
-import com.example.sheetmusiclist.config.auth.review.EditReviewRequestDto;
-import com.example.sheetmusiclist.config.auth.review.findReviewResponseDto;
+import com.example.sheetmusiclist.dto.review.ReviewCreateRequestDto;
+import com.example.sheetmusiclist.dto.review.ReviewEditRequestDto;
+import com.example.sheetmusiclist.dto.review.ReviewfindResponseDto;
 import com.example.sheetmusiclist.entity.member.Member;
 import com.example.sheetmusiclist.entity.review.Review;
 import com.example.sheetmusiclist.entity.sheetmusic.SheetMusic;
@@ -42,7 +42,7 @@ public class ReviewServiceUnitTest {
     public void createReviewTest(){
         //given
         Long id =1l;
-        CreateReviewRequestDto req = new CreateReviewRequestDto("a",2);
+        ReviewCreateRequestDto req = new ReviewCreateRequestDto("a",2);
         Member member =createMember();
         SheetMusic sheetMusic = createSheetMusic(member);
         Review review = createReview(member,sheetMusic);
@@ -60,7 +60,7 @@ public class ReviewServiceUnitTest {
         //given
         Long smid =1l;
         Long reid =1l;
-        EditReviewRequestDto req = new EditReviewRequestDto("a",2);
+        ReviewEditRequestDto req = new ReviewEditRequestDto("a",2);
         Member member =createMember();
         SheetMusic sheetMusic = createSheetMusic(member);
         Review review = createReview(member,sheetMusic);
@@ -88,7 +88,7 @@ public class ReviewServiceUnitTest {
         given(reviewRepository.findAllBySheetmusic(sheetMusic)).willReturn(reviews);
 
         //when
-        List<findReviewResponseDto> result = reviewService.findReviews(smid);
+        List<ReviewfindResponseDto> result = reviewService.findReviews(smid);
 
         //then
         assertThat(result.size()).isEqualTo(reviews.size());
