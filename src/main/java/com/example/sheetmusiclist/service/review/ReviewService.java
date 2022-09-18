@@ -65,7 +65,7 @@ public class ReviewService {
         if (!member.getName().equals(review.getMember().getName())) {
             throw new MemberNotEqualsException();
         }
-        reviewRepository.deleteById(reviewid);
+        reviewRepository.delete(review);
         //reviewRepository.delete(review);
         // 위에 작성한게 더 효율적이지 않음?
 
