@@ -8,6 +8,7 @@ import com.example.sheetmusiclist.exception.MemberNotFoundException;
 import com.example.sheetmusiclist.repository.member.MemberRepository;
 import com.example.sheetmusiclist.response.Response;
 import com.example.sheetmusiclist.service.sheetmusic.SheetMusicService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -26,6 +27,7 @@ public class SheetMusicController {
 
 
     // 악보 등록
+    @ApiOperation(value = "악보 등록", notes = "악보를 등록한다.")
     @PostMapping("/sheetmusics")
     @ResponseStatus(HttpStatus.CREATED)
     public Response create(@Valid @RequestBody SheetMusicCreateRequestDto sheetMusicCreateRequestDto) {
@@ -35,10 +37,11 @@ public class SheetMusicController {
 
         sheetMusicService.createSheetMusic(sheetMusicCreateRequestDto, member);
 
-        return Response.success();
+        return Response.success("악보 등록 완료");
     }
 
     // 악보 전체 조회
+    @ApiOperation(value = "악보 전체 조회", notes = "전체 악보를 조회한다.")
     @GetMapping("/sheetmusics")
     @ResponseStatus(HttpStatus.OK)
     public Response findAll() {
@@ -47,6 +50,7 @@ public class SheetMusicController {
     }
 
     // 악보 단건 조회
+    @ApiOperation(value = "악보 단건 조회", notes = "악보를 등록한다.")
     @GetMapping("/sheetmusics/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Response find(@PathVariable("id") Long id) {
@@ -55,6 +59,7 @@ public class SheetMusicController {
     }
 
     // 악보 수정
+    @ApiOperation(value = "악보 수정", notes = "악보를 수정한다.")
     @PutMapping("/sheetmusics/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Response edit(@PathVariable("id") Long id, @Valid @RequestBody SheetMusicEditRequestDto sheetMusicEditRequestDto) {
@@ -64,10 +69,11 @@ public class SheetMusicController {
 
         sheetMusicService.editSheetMusic(id, member, sheetMusicEditRequestDto);
 
-        return Response.success();
+        return Response.success("악보 수정 완료");
     }
 
     // 악보 삭제
+    @ApiOperation(value = "악보 삭제", notes = "악보를 삭제한다.")
     @DeleteMapping("/sheetmusics/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Response delete(@PathVariable("id") Long id) {
@@ -77,7 +83,7 @@ public class SheetMusicController {
 
         sheetMusicService.deleteSheetMusic(id, member);
 
-        return Response.success();
+        return Response.success("악보 삭제 완료");
     }
 }
 
