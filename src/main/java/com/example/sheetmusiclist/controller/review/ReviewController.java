@@ -64,7 +64,7 @@ public class ReviewController {
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{sheetmusicid}/reviews/{reviewid}")
     public Response deleteReview(@PathVariable("sheetmusicid") Long sheetmusicid,
-                                 @PathVariable("reviewjd") Long reviewid){
+                                 @PathVariable("reviewid") Long reviewid){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Member member = memberRepository.findByUsername(authentication.getName()).orElseThrow(MemberNotFoundException::new);
         reviewService.deleteReview(sheetmusicid, reviewid, member);
