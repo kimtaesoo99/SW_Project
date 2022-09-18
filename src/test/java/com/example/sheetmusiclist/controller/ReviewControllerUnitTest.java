@@ -3,6 +3,7 @@ package com.example.sheetmusiclist.controller;
 import com.example.sheetmusiclist.dto.review.ReviewCreateRequestDto;
 import com.example.sheetmusiclist.dto.review.ReviewEditRequestDto;
 import com.example.sheetmusiclist.controller.review.ReviewController;
+import com.example.sheetmusiclist.dto.review.ReviewFindRequestDto;
 import com.example.sheetmusiclist.entity.member.Member;
 import com.example.sheetmusiclist.repository.member.MemberRepository;
 import com.example.sheetmusiclist.service.review.ReviewService;
@@ -52,8 +53,7 @@ public class ReviewControllerUnitTest {
     @DisplayName("createReview")
     public void createReviewTest()throws Exception{
         //given
-        Long id  =1l;
-        ReviewCreateRequestDto req = new ReviewCreateRequestDto("a",4);
+        ReviewCreateRequestDto req = new ReviewCreateRequestDto(1l,"a",4);
         Member member = createMember();
         Authentication authentication = new UsernamePasswordAuthenticationToken(member.getId(), "", Collections.emptyList());
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -61,39 +61,39 @@ public class ReviewControllerUnitTest {
 
         //when
         mockMvc.perform(
-                post("/api/{id}/reviews",id)
+                post("/api/reviews")
                         .content(objectMapper.writeValueAsString(req))
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isCreated());
 
 
         //then
-        verify(reviewService).createReview(id,member,req);
+        verify(reviewService).createReview(member,req);
     }
 
     @Test
     @DisplayName("getReview")
     public void getReviewTest()throws Exception{
         //given
-        Long id  =1l;
+        ReviewFindRequestDto req = new ReviewFindRequestDto(1l);
 
         //when
         mockMvc.perform(
-                get("/api/{id}/reviews",id)
+                get("/api/reviews")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(req))
         ).andExpect(status().isOk());
 
-
         //then
-        verify(reviewService).findReviews(id);
+        verify(reviewService).findReviews(req);
     }
 
     @Test
     @DisplayName("editReview")
     public void editReviewTest()throws Exception{
         //given
-        Long smid  =1l;
-        Long reid =1l;
-        ReviewEditRequestDto req = new ReviewEditRequestDto("a",4);
+        Long id =1l;
+        ReviewEditRequestDto req = new ReviewEditRequestDto(1l,"a",4);
         Member member = createMember();
         Authentication authentication = new UsernamePasswordAuthenticationToken(member.getId(), "", Collections.emptyList());
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -101,21 +101,20 @@ public class ReviewControllerUnitTest {
 
         //when
         mockMvc.perform(
-                put("/api/{id}/reviews/{reviewid}",smid,reid)
+                put("/api/reviews/{id}",id)
                         .content(objectMapper.writeValueAsString(req))
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
 
 
         //then
-        verify(reviewService).editReview(member,smid,reid,req);
+        verify(reviewService).editReview(member,id,req);
     }
 
     @Test
     @DisplayName("deleteReview")
     public void deleteReviewTest()throws Exception{
         //given
-        Long smid  =1l;
         Long reid =1l;
         Member member = createMember();
         Authentication authentication = new UsernamePasswordAuthenticationToken(member.getId(), "", Collections.emptyList());
@@ -124,12 +123,12 @@ public class ReviewControllerUnitTest {
 
         //when
         mockMvc.perform(
-                delete("/api/{id}/reviews/{reviewid}",smid,reid)
+                delete("/api/reviews/{id}",reid)
         ).andExpect(status().isOk());
 
 
         //then
-        verify(reviewService).deleteReview(smid,reid,member);
+        verify(reviewService).deleteReview(reid,member);
     }
 
 

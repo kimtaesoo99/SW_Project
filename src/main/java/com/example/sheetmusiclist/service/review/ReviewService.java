@@ -62,7 +62,7 @@ public class ReviewService {
         if (!member.getNickname().equals(review.getMember().getNickname())) {
             throw new MemberNotEqualsException();
         }
-        reviewRepository.deleteById(review.getId());
+        reviewRepository.delete(review);
 
     }
 
