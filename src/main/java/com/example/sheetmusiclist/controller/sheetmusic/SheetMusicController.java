@@ -3,6 +3,7 @@ package com.example.sheetmusiclist.controller.sheetmusic;
 
 import com.example.sheetmusiclist.dto.sheetmusic.SheetMusicCreateRequestDto;
 import com.example.sheetmusiclist.dto.sheetmusic.SheetMusicEditRequestDto;
+import com.example.sheetmusiclist.dto.sheetmusic.SheetMusicSearchRequestDto;
 import com.example.sheetmusiclist.entity.member.Member;
 import com.example.sheetmusiclist.exception.MemberNotFoundException;
 import com.example.sheetmusiclist.repository.member.MemberRepository;
@@ -57,6 +58,23 @@ public class SheetMusicController {
 
         return Response.success(sheetMusicService.findSheetMusic(id));
     }
+
+    //악보 검색 하기
+    @ApiOperation(value = "악보 제목으로 검색 하기", notes = "악보 제목으로 검색하기.")
+    @GetMapping("/sheetmusics/searchtitle")
+    @ResponseStatus(HttpStatus.OK)
+    public Response searchTitle(@Valid @RequestBody SheetMusicSearchRequestDto req){
+        return Response.success(sheetMusicService.searchTitleSheetMusic(req));
+    }
+    //악보 검색 하기
+    @ApiOperation(value = "악보 작곡가로 검색 하기", notes = "악보 작곡가로 검색하기.")
+    @GetMapping("/sheetmusics/searchwriter")
+    @ResponseStatus(HttpStatus.OK)
+    public Response searchWriter(@Valid @RequestBody SheetMusicSearchRequestDto req){
+        return Response.success(sheetMusicService.searchWriterSheetMusic(req));
+    }
+
+
 
     // 악보 수정
     @ApiOperation(value = "악보 수정", notes = "악보를 수정한다.")

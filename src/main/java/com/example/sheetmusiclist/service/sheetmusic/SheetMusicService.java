@@ -1,10 +1,7 @@
 package com.example.sheetmusiclist.service.sheetmusic;
 
 
-import com.example.sheetmusiclist.dto.sheetmusic.SheetMusicCreateRequestDto;
-import com.example.sheetmusiclist.dto.sheetmusic.SheetMusicEditRequestDto;
-import com.example.sheetmusiclist.dto.sheetmusic.SheetMusicFindAllResponseDto;
-import com.example.sheetmusiclist.dto.sheetmusic.SheetMusicFindResponseDto;
+import com.example.sheetmusiclist.dto.sheetmusic.*;
 import com.example.sheetmusiclist.entity.member.Member;
 import com.example.sheetmusiclist.entity.sheetmusic.SheetMusic;
 import com.example.sheetmusiclist.exception.MemberNotEqualsException;
@@ -58,6 +55,24 @@ public class SheetMusicService {
 
         return SheetMusicFindResponseDto.toDto(sheetMusic);
     }
+
+    //악보 검색 하기
+    @Transactional(readOnly = true)
+    public List<SheetMusicSearchResponseDto> searchTitleSheetMusic(SheetMusicSearchRequestDto req){
+        List<SheetMusic> sheetMusics = sheetMusicRepository.findAllByTitleContaining(req.getSearchKeyWord());
+        List<SheetMusicSearchResponseDto> result = new ArrayList<>();
+        sheetMusics.forEach(s->result.add(SheetMusicSearchResponseDto.toDto(s)));
+        return result;
+    }
+    //악보 검색 하기
+    @Transactional(readOnly = true)
+    public List<SheetMusicSearchResponseDto> searchWriterSheetMusic(SheetMusicSearchRequestDto req){
+        List<SheetMusic> sheetMusics = sheetMusicRepository.findAllByWriterContaining(req.getSearchKeyWord());
+        List<SheetMusicSearchResponseDto> result = new ArrayList<>();
+        sheetMusics.forEach(s->result.add(SheetMusicSearchResponseDto.toDto(s)));
+        return result;
+    }
+
 
     // 악보 수정
     @Transactional
