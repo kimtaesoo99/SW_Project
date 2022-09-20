@@ -16,8 +16,8 @@
 - [김승범](https://github.com/daily1313) | AWS
 - [오정환](https://github.com/poll9999) | AWS
 - [박상혁](https://github.com/baksakcci) | AWS
-- [김태수](https://github.com/kimtaesoo99) | Spring Security + JWT + CRUD
-- [엄태인](https://github.com/eom-tae-in) | Spring Security + JWT + CRUD
+- [김태수](https://github.com/kimtaesoo99) | Spring Security + JWT + CRUD + AWS
+- [엄태인](https://github.com/eom-tae-in) | Spring Security + JWT + CRUD + AWS
 ---
 # 4. Skill
 - JWT + Security (Json Web Token)
