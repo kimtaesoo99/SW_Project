@@ -31,7 +31,7 @@ public class SheetMusicController {
     @ApiOperation(value = "악보 등록", notes = "악보를 등록한다.")
     @PostMapping("/sheetmusics")
     @ResponseStatus(HttpStatus.CREATED)
-    public Response create(@Valid @RequestBody SheetMusicCreateRequestDto sheetMusicCreateRequestDto) {
+    public Response create(@Valid @ModelAttribute SheetMusicCreateRequestDto sheetMusicCreateRequestDto) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Member member = memberRepository.findByUsername(authentication.getName()).orElseThrow(MemberNotFoundException::new);
@@ -66,6 +66,7 @@ public class SheetMusicController {
     public Response searchTitle(@Valid @RequestBody SheetMusicSearchRequestDto req){
         return Response.success(sheetMusicService.searchTitleSheetMusic(req));
     }
+
     //악보 검색 하기
     @ApiOperation(value = "악보 작곡가로 검색 하기", notes = "악보 작곡가로 검색하기.")
     @GetMapping("/sheetmusics/searchwriter")
@@ -80,7 +81,7 @@ public class SheetMusicController {
     @ApiOperation(value = "악보 수정", notes = "악보를 수정한다.")
     @PutMapping("/sheetmusics/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Response edit(@PathVariable("id") Long id, @Valid @RequestBody SheetMusicEditRequestDto sheetMusicEditRequestDto) {
+    public Response edit(@PathVariable("id") Long id, @Valid @ModelAttribute SheetMusicEditRequestDto sheetMusicEditRequestDto) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Member member = memberRepository.findByUsername(authentication.getName()).orElseThrow(MemberNotFoundException::new);
