@@ -23,7 +23,6 @@ import static java.util.stream.Collectors.toList;
 @Entity
 @Builder
 public class SheetMusic extends EntityDate {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,7 +39,7 @@ public class SheetMusic extends EntityDate {
     private String writer;
 
 
-    @OneToMany(mappedBy = "sheetmusic", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "sheetMusic", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Image> images;
 
     public SheetMusic(Member member, String title, String writer,  List<Image> images) {

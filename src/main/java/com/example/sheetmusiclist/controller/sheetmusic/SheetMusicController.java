@@ -26,7 +26,6 @@ public class SheetMusicController {
     private final SheetMusicService sheetMusicService;
     private final MemberRepository memberRepository;
 
-
     // 악보 등록
     @ApiOperation(value = "악보 등록", notes = "악보를 등록한다.")
     @PostMapping("/sheetmusics")
