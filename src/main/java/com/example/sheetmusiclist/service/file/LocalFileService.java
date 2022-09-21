@@ -2,6 +2,8 @@ package com.example.sheetmusiclist.service.file;
 
 import com.example.sheetmusiclist.exception.FileUploadFailureException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,10 +13,11 @@ import java.io.IOException;
 
 @Service
 @Slf4j
+@PropertySource("classpath:image.properties")
 public class LocalFileService implements FileService{
 
-    //    @Value("${upload.image.location}")
-    private String location = "/Users/yoon/Desktop/image/";
+    @Value("${upload.image.location}")
+    private String location;
 
     @PostConstruct
     void postConstruct() {

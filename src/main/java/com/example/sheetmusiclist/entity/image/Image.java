@@ -41,7 +41,6 @@ public class Image extends EntityDate {
         this.originName = originName;
         this.uniqueName = generateUniqueName(extractExtension(originName));
     }
-
     public void initSheetMusic(SheetMusic sheetMusic) {
         if(this.sheetMusic == null) {
             this.sheetMusic = sheetMusic;
