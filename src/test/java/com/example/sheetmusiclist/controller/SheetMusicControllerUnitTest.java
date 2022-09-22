@@ -12,17 +12,21 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static com.example.sheetmusiclist.factory.MemberFactory.createMember;
@@ -49,11 +53,19 @@ public class SheetMusicControllerUnitTest {
         mockMvc = MockMvcBuilders.standaloneSetup(sheetMusicController).build();
     }
 
+    //여기 수정해야함.
     @Test
     @DisplayName("createSheetMusic")
     public void createSheetMusicTest()throws Exception{
         //given
-        SheetMusicCreateRequestDto req = new SheetMusicCreateRequestDto("a","b");
+        ArgumentCaptor<SheetMusicCreateRequestDto> productCreateRequestDtoArgumentCaptor = ArgumentCaptor.forClass(SheetMusicCreateRequestDto.class);
+        List<MultipartFile> imageFiles = List.of(
+                new MockMultipartFile("test1", "test1.PNG", MediaType.IMAGE_PNG_VALUE, "test1".getBytes()),
+                new MockMultipartFile("test2", "test2.PNG", MediaType.IMAGE_PNG_VALUE, "test2".getBytes())
+        );
+
+
+        SheetMusicCreateRequestDto req = new SheetMusicCreateRequestDto("a","b",imageFiles);
         Member member = createMember();
         Authentication authentication = new UsernamePasswordAuthenticationToken(member.getId(), "", Collections.emptyList());
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -104,6 +116,7 @@ public class SheetMusicControllerUnitTest {
     @DisplayName("editSheetMusic")
     public void editSheetMusicTest()throws Exception{
         //given
+
         Long id =1l;
         SheetMusicEditRequestDto req = new SheetMusicEditRequestDto("a","b");
         Member member = createMember();

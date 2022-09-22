@@ -9,8 +9,9 @@ import com.example.sheetmusiclist.exception.MemberNotEqualsException;
 import com.example.sheetmusiclist.exception.SheetMusicNotFoundException;
 import com.example.sheetmusiclist.repository.sheetmusic.SheetMusicRepository;
 import com.example.sheetmusiclist.service.file.FileService;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,20 +29,21 @@ public class SheetMusicService {
     private final SheetMusicRepository sheetMusicRepository;
 
     private final FileService fileService;
+
     // 악보 등록
     @Transactional
     public void createSheetMusic(SheetMusicCreateRequestDto req, Member member) {
         List<Image> images = req.getImages().stream().map(i -> new Image(i.getOriginalFilename())).collect(toList());
-        SheetMusic sheetMusic = sheetMusicRepository.save(new SheetMusic(member,req.getTitle(),req.getSongwriter(),images));
+        SheetMusic sheetMusic = sheetMusicRepository.save(new SheetMusic(member, req.getTitle(), req.getSongwriter(), images));
         uploadImages(sheetMusic.getImages(), req.getImages());
 
     }
 
-    // 악보 전체 조회
+    // 악보 전체 조회함  여기페이징 처리해야함
     @Transactional(readOnly = true)
-    public List<SheetMusicFindAllResponseDto> findAllSheetMusic() {
+    public List<SheetMusicFindAllResponseDto> findAllSheetMusic(Pageable pageable) {
 
-        List<SheetMusic> sheetMusics = sheetMusicRepository.findAll();
+        Page<SheetMusic> sheetMusics = sheetMusicRepository.findAll(pageable);
 
         List<SheetMusicFindAllResponseDto> result = new ArrayList<>();
 
@@ -60,20 +62,21 @@ public class SheetMusicService {
         return SheetMusicFindResponseDto.toDto(sheetMusic);
     }
 
-    //악보 검색 하기
+    //악보 제목으로 검색 하기
     @Transactional(readOnly = true)
-    public List<SheetMusicSearchResponseDto> searchTitleSheetMusic(SheetMusicSearchRequestDto req){
+    public List<SheetMusicSearchResponseDto> searchTitleSheetMusic(SheetMusicSearchRequestDto req) {
         List<SheetMusic> sheetMusics = sheetMusicRepository.findAllByTitleContaining(req.getSearchKeyWord());
         List<SheetMusicSearchResponseDto> result = new ArrayList<>();
-        sheetMusics.forEach(s->result.add(SheetMusicSearchResponseDto.toDto(s)));
+        sheetMusics.forEach(s -> result.add(SheetMusicSearchResponseDto.toDto(s)));
         return result;
     }
-    //악보 검색 하기
+
+    //악보 작곡가로 검색 하기
     @Transactional(readOnly = true)
-    public List<SheetMusicSearchResponseDto> searchWriterSheetMusic(SheetMusicSearchRequestDto req){
+    public List<SheetMusicSearchResponseDto> searchWriterSheetMusic(SheetMusicSearchRequestDto req) {
         List<SheetMusic> sheetMusics = sheetMusicRepository.findAllByWriterContaining(req.getSearchKeyWord());
         List<SheetMusicSearchResponseDto> result = new ArrayList<>();
-        sheetMusics.forEach(s->result.add(SheetMusicSearchResponseDto.toDto(s)));
+        sheetMusics.forEach(s -> result.add(SheetMusicSearchResponseDto.toDto(s)));
         return result;
     }
 
@@ -106,6 +109,7 @@ public class SheetMusicService {
         sheetMusicRepository.deleteById(id);
 
     }
+
     private void uploadImages(List<Image> images, List<MultipartFile> fileImages) {
         IntStream.range(0, images.size()).forEach(i -> fileService.upload(fileImages.get(i), images.get(i).getUniqueName()));
     }
