@@ -19,7 +19,7 @@ public class SheetMusicFindResponseDto {
 
     private String songwriter;
 
-    private String loginUser;
+    private String nickName;
 
     private List<ImageDto> images;
 

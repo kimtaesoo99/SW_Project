@@ -34,7 +34,7 @@ public class SheetMusicService {
     @Transactional
     public void createSheetMusic(SheetMusicCreateRequestDto req, Member member) {
         List<Image> images = req.getImages().stream().map(i -> new Image(i.getOriginalFilename())).collect(toList());
-        SheetMusic sheetMusic = sheetMusicRepository.save(new SheetMusic(member, req.getTitle(), req.getSongwriter(), images));
+        SheetMusic sheetMusic = sheetMusicRepository.save(new SheetMusic(member, req.getTitle(), req.getWriter(), images));
         uploadImages(sheetMusic.getImages(), req.getImages());
 
     }
@@ -50,6 +50,7 @@ public class SheetMusicService {
         for (SheetMusic sheetMusic : sheetMusics) {
             result.add(SheetMusicFindAllResponseDto.toDto(sheetMusic));
         }
+
         return result;
     }
 
@@ -64,8 +65,8 @@ public class SheetMusicService {
 
     //악보 제목으로 검색 하기
     @Transactional(readOnly = true)
-    public List<SheetMusicSearchResponseDto> searchTitleSheetMusic(SheetMusicSearchRequestDto req) {
-        List<SheetMusic> sheetMusics = sheetMusicRepository.findAllByTitleContaining(req.getSearchKeyWord());
+    public List<SheetMusicSearchResponseDto> searchTitleSheetMusic(Pageable pageable,SheetMusicSearchRequestDto req) {
+        Page<SheetMusic> sheetMusics = sheetMusicRepository.findAllByTitleContaining(req.getSearchKeyWord(),pageable);
         List<SheetMusicSearchResponseDto> result = new ArrayList<>();
         sheetMusics.forEach(s -> result.add(SheetMusicSearchResponseDto.toDto(s)));
         return result;
@@ -73,8 +74,8 @@ public class SheetMusicService {
 
     //악보 작곡가로 검색 하기
     @Transactional(readOnly = true)
-    public List<SheetMusicSearchResponseDto> searchWriterSheetMusic(SheetMusicSearchRequestDto req) {
-        List<SheetMusic> sheetMusics = sheetMusicRepository.findAllByWriterContaining(req.getSearchKeyWord());
+    public List<SheetMusicSearchResponseDto> searchWriterSheetMusic(Pageable pageable,SheetMusicSearchRequestDto req) {
+        Page<SheetMusic> sheetMusics = sheetMusicRepository.findAllByWriterContaining(req.getSearchKeyWord(),pageable);
         List<SheetMusicSearchResponseDto> result = new ArrayList<>();
         sheetMusics.forEach(s -> result.add(SheetMusicSearchResponseDto.toDto(s)));
         return result;

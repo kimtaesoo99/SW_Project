@@ -12,6 +12,9 @@ import com.example.sheetmusiclist.response.Response;
 import com.example.sheetmusiclist.service.review.ReviewService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,9 +47,10 @@ public class ReviewController {
     @ApiOperation(value = "해당 악보의 리뷰 전체 조회", notes = "해당 악보의 리뷰를 전체 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/reviews")
-    public Response getReview(@Valid @RequestBody ReviewFindRequestDto req){
+    public Response getReview(@PageableDefault(size = 10,sort = "id",direction = Sort.Direction.DESC) Pageable pageable,
+            @Valid @RequestBody ReviewFindRequestDto req){
 
-        return Response.success(reviewService.findReviews(req));
+        return Response.success(reviewService.findReviews(pageable,req));
     }
     // 리뷰 수정
     @ApiOperation(value = "리뷰 수정", notes = "리뷰를 수정한다.")

@@ -19,7 +19,7 @@ public class SheetMusicCreateRequestDto {
     private String title;
 
     @NotBlank(message = "작곡가를 입력해주세요.")
-    private String songwriter;
+    private String writer;
 
     private List<MultipartFile> images = new ArrayList<>();
 

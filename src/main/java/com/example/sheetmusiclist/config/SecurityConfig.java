@@ -79,16 +79,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/sign-up/**", "/api/sign-in", "/api/reissue").permitAll() // auth
 
 
-                .antMatchers(HttpMethod.POST, "/api/products").access("hasRole('ROLE_SELLER')")
-                .antMatchers(HttpMethod.GET, "/api/products").access("hasRole('ROLE_USER') or hasRole('ROLE_SELLER') or hasRole('ROLE_ADMIN')")
-                .antMatchers(HttpMethod.GET, "/api/products/{id}").access("hasRole('ROLE_USER') or hasRole('ROLE_SELLER') or hasRole('ROLE_ADMIN')")
-                .antMatchers(HttpMethod.PUT, "/api/products/{id}").access("hasRole('ROLE_SELLER')")
-                .antMatchers(HttpMethod.DELETE, "/api/products/{id}").access("hasRole('ROLE_SELLER')")
-
-                .antMatchers(HttpMethod.POST, "/api/carts").access("hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.GET, "/api/carts").access("hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.DELETE, "/api/carts/{cartItemId}").access("hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.POST, "/api/carts/buying").access("hasRole('ROLE_USER')")
 
                 .antMatchers(HttpMethod.POST, "/api/sheetmusics").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.GET, "/api/sheetmusics").access("hasRole('ROLE_USER')")
@@ -98,8 +88,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/api/sheetmusics/{id}").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.DELETE, "/api/sheetmusics/{id}").access("hasRole('ROLE_USER')")
 
-                .antMatchers(HttpMethod.POST, "/api/{id}/reviews").access("hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.GET, "/api/reviews/{id}").access("hasRole('ROLE_USER')")
+                .antMatchers(HttpMethod.POST, "/api/reviews").access("hasRole('ROLE_USER')")
+                .antMatchers(HttpMethod.GET, "/api/reviews").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.PUT, "/api/reviews/{id}").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.DELETE, "/api/reviews/{id}").access("hasRole('ROLE_USER')")
 
