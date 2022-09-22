@@ -25,5 +25,4 @@ public class SheetMusicEditRequestDto {
 
     private List<Integer> deletedImages = new ArrayList<>();
 
-
 }

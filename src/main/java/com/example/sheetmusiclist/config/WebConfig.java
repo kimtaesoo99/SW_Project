@@ -1,4 +1,5 @@
 package com.example.sheetmusiclist.config;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -22,7 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
     private final MessageSource messageSource;
 
     @Value("${upload.image.location}")
-    private String location ;
+    private String location;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

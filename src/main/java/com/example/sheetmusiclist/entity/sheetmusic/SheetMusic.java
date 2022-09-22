@@ -49,6 +49,7 @@ public class SheetMusic extends EntityDate {
         this.images = new ArrayList<>();
         addImages(images);
     }
+
     private void addImages(List<Image> added) {
         added.forEach(i -> {
             images.add(i);
@@ -58,12 +59,14 @@ public class SheetMusic extends EntityDate {
 
     //수정
     public ImageUpdatedResult update(SheetMusicEditRequestDto req) {
+
         this.title = req.getTitle();
         this.writer = req.getWriter();
         ImageUpdatedResult result = findImageUpdatedResult(req.getAddedImages(), req.getDeletedImages());
         addImages(result.getAddedImages());
         deleteImages(result.getDeletedImages());
         return result;
+
     }
 
     private void deleteImages(List<Image> deleted) {

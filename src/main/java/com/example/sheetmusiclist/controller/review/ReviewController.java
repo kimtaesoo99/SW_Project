@@ -40,7 +40,7 @@ public class ReviewController {
         return Response.success("리뷰 작성 완료");
     }
 
-    // 리뷰 전체 조회(by 악보)
+    // 리뷰 전체 조회(by 악보)여기도 페이징해야함
     @ApiOperation(value = "해당 악보의 리뷰 전체 조회", notes = "해당 악보의 리뷰를 전체 조회한다.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/reviews")
