@@ -144,4 +144,18 @@ public class ExceptionAdvice {
         return Response.failure(400, "이미 매칭이 신청되었습니다.");
     }
 
+    //에러코드 수정해야함 시간날때 에러코드 확인점
+    @ExceptionHandler(FileUploadFailureException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Response fileUploadFailureException(){
+        return Response.failure(500,"파일 업로드에 실패하였습니다.");
+    }
+
+    //에러코드 확인점
+    @ExceptionHandler(UnsupportedImageFormatException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Response unsupportedImageFormatException(){
+        return Response.failure(400,"이미지형식이 맞지않습니다.");
+    }
+
 }
