@@ -5,6 +5,7 @@ import com.example.sheetmusiclist.dto.review.ReviewEditRequestDto;
 import com.example.sheetmusiclist.controller.review.ReviewController;
 import com.example.sheetmusiclist.dto.review.ReviewFindRequestDto;
 import com.example.sheetmusiclist.entity.member.Member;
+import com.example.sheetmusiclist.entity.review.Review;
 import com.example.sheetmusiclist.repository.member.MemberRepository;
 import com.example.sheetmusiclist.service.review.ReviewService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,6 +16,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -49,6 +54,7 @@ public class ReviewControllerUnitTest {
         mockMvc = MockMvcBuilders.standaloneSetup(reviewController).build();
     }
 
+    //리뷰작성
     @Test
     @DisplayName("createReview")
     public void createReviewTest()throws Exception{
@@ -71,12 +77,14 @@ public class ReviewControllerUnitTest {
         verify(reviewService).createReview(member,req);
     }
 
+    //리뷰 조회
     @Test
     @DisplayName("getReview")
     public void getReviewTest()throws Exception{
         //given
         ReviewFindRequestDto req = new ReviewFindRequestDto(1l);
-
+        Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "id");
+//        Page<Review> result =   .findAll(pageable);
         //when
         mockMvc.perform(
                 get("/api/reviews")
@@ -85,7 +93,7 @@ public class ReviewControllerUnitTest {
         ).andExpect(status().isOk());
 
         //then
-        verify(reviewService).findReviews(req);
+//        verify(reviewService).findReviews(req,);
     }
 
     @Test

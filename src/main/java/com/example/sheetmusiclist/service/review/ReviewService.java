@@ -9,6 +9,8 @@ import com.example.sheetmusiclist.exception.*;
 import com.example.sheetmusiclist.repository.review.ReviewRepository;
 import com.example.sheetmusiclist.repository.sheetmusic.SheetMusicRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,9 +47,9 @@ public class ReviewService {
 
     //리뷰 전체 조회(by 악보)
     @Transactional(readOnly = true)
-    public List<ReviewfindResponseDto> findReviews(ReviewFindRequestDto req){
+    public List<ReviewfindResponseDto> findReviews(Pageable pageable,ReviewFindRequestDto req){
         SheetMusic sheetmusic = sheetMusicRepository.findById(req.getSheetMusicId()).orElseThrow(SheetMusicNotFoundException::new);
-        List<Review> reviews = reviewRepository.findAllBySheetmusic(sheetmusic);
+        Page<Review> reviews = reviewRepository.findAllBySheetmusic(sheetmusic,pageable);
         List<ReviewfindResponseDto> result = new ArrayList<>();
         for (Review review : reviews) {
             result.add(ReviewfindResponseDto.toDto(review));
