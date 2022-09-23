@@ -1,5 +1,6 @@
 package com.example.sheetmusiclist.dto.sheetmusic;
 
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,11 +15,11 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class SheetMusicEditRequestDto {
-    @ApiParam(value = "악보 제목", required = true, example = "노래")
+    @ApiModelProperty(value = "제목", notes = "제목을 입력해주세요.", required = true, example = "노래제목")
     @NotBlank(message = "제목을 입력해주세요.")
     private String title;
 
-    @ApiParam(value = "악보 작곡가", required = true, example = "한요한")
+    @ApiModelProperty(value = "작곡가", notes = "작곡가를 입력해주세요.", required = true, example = "아이유")
     @NotBlank(message = "작곡가를 입력해주세요")
     private String writer;
 
