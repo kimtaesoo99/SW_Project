@@ -10,7 +10,9 @@ import com.example.sheetmusiclist.exception.MemberNotFoundException;
 import com.example.sheetmusiclist.repository.member.MemberRepository;
 import com.example.sheetmusiclist.response.Response;
 import com.example.sheetmusiclist.service.review.ReviewService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,7 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
+@Api(value = "Review Controller", tags = "Review")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -56,7 +58,8 @@ public class ReviewController {
     @ApiOperation(value = "리뷰 수정", notes = "리뷰를 수정한다.")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/reviews/{id}")
-    public Response editReview(@PathVariable("id") Long id, @Valid @RequestBody ReviewEditRequestDto req){
+    public Response editReview(@ApiParam(value = "리뷰 id",required = true)
+            @PathVariable("id") Long id, @Valid @RequestBody ReviewEditRequestDto req){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Member member = memberRepository.findByUsername(authentication.getName()).orElseThrow(MemberNotFoundException::new);
 
@@ -68,7 +71,7 @@ public class ReviewController {
     @ApiOperation(value = "리뷰 삭제", notes = "리뷰를 삭제한다.")
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/reviews/{id}")
-    public Response deleteReview(@PathVariable("id") Long id){
+    public Response deleteReview(@ApiParam(value = "리뷰 id",required = true)@PathVariable("id") Long id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Member member = memberRepository.findByUsername(authentication.getName()).orElseThrow(MemberNotFoundException::new);
         reviewService.deleteReview(id, member);

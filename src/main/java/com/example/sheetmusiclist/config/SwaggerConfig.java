@@ -27,7 +27,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.OAS_30)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("hackathon.server.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.example.sheetmusiclist.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .securityContexts(Arrays.asList(securityContext()))
@@ -36,11 +36,11 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("어디까지 가봤니?")
-                .description("K-해커톤 '어디까지 가봤니' API 서버입니다.")
-                .license("sosow0212@naver.com")
-                .licenseUrl("https://github.com/sosow0212/https://github.com/sosow0212/WhereHaveYouBeen")
-                .version("1.0")
+                .title("봐라 오케!")
+                .description("악보변환 API 서버입니다.")
+                .license("https://github.com/eom-tae-in/SW_Project")
+                .licenseUrl("https://github.com/eom-tae-in/SW_Project")
+                .version("3.0")
                 .build();
     }
 

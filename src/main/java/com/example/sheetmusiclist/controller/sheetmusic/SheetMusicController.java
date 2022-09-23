@@ -9,7 +9,9 @@ import com.example.sheetmusiclist.exception.MemberNotFoundException;
 import com.example.sheetmusiclist.repository.member.MemberRepository;
 import com.example.sheetmusiclist.response.Response;
 import com.example.sheetmusiclist.service.sheetmusic.SheetMusicService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -20,7 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
+@Api(value = "SheetMusic Controller",tags = "SheetMusic")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")
@@ -56,7 +58,8 @@ public class SheetMusicController {
     @ApiOperation(value = "악보 단건 조회", notes = "악보를 등록한다.")
     @GetMapping("/sheetmusics/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Response find(@PathVariable("id") Long id) {
+    public Response find(@ApiParam(value = "악보 id",required = true)
+            @PathVariable("id") Long id) {
 
         return Response.success(sheetMusicService.findSheetMusic(id));
     }
@@ -84,7 +87,8 @@ public class SheetMusicController {
     @ApiOperation(value = "악보 수정", notes = "악보를 수정한다.")
     @PutMapping("/sheetmusics/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Response edit(@PathVariable("id") Long id, @Valid @ModelAttribute SheetMusicEditRequestDto sheetMusicEditRequestDto) {
+    public Response edit(@ApiParam(value = "악보 id",required = true)
+            @PathVariable("id") Long id, @Valid @ModelAttribute SheetMusicEditRequestDto sheetMusicEditRequestDto) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Member member = memberRepository.findByUsername(authentication.getName()).orElseThrow(MemberNotFoundException::new);
@@ -98,7 +102,8 @@ public class SheetMusicController {
     @ApiOperation(value = "악보 삭제", notes = "악보를 삭제한다.")
     @DeleteMapping("/sheetmusics/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Response delete(@PathVariable("id") Long id) {
+    public Response delete(@ApiParam(value = "악보 id",required = true)
+            @PathVariable("id") Long id) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Member member = memberRepository.findByUsername(authentication.getName()).orElseThrow(MemberNotFoundException::new);
