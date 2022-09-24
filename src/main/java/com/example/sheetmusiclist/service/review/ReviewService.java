@@ -47,8 +47,8 @@ public class ReviewService {
 
     //리뷰 전체 조회(by 악보)
     @Transactional(readOnly = true)
-    public List<ReviewfindResponseDto> findReviews(Pageable pageable,ReviewFindRequestDto req){
-        SheetMusic sheetmusic = sheetMusicRepository.findById(req.getSheetMusicId()).orElseThrow(SheetMusicNotFoundException::new);
+    public List<ReviewfindResponseDto> findReviews(Pageable pageable,Long id){
+        SheetMusic sheetmusic = sheetMusicRepository.findById(id).orElseThrow(SheetMusicNotFoundException::new);
         Page<Review> reviews = reviewRepository.findAllBySheetmusic(sheetmusic,pageable);
         List<ReviewfindResponseDto> result = new ArrayList<>();
         for (Review review : reviews) {

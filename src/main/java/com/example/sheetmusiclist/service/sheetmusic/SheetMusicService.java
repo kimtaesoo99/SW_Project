@@ -65,8 +65,8 @@ public class SheetMusicService {
 
     //악보 제목으로 검색 하기
     @Transactional(readOnly = true)
-    public List<SheetMusicSearchResponseDto> searchTitleSheetMusic(Pageable pageable,SheetMusicSearchRequestDto req) {
-        Page<SheetMusic> sheetMusics = sheetMusicRepository.findAllByTitleContaining(req.getSearchKeyWord(),pageable);
+    public List<SheetMusicSearchResponseDto> searchTitleSheetMusic(Pageable pageable, String title) {
+        Page<SheetMusic> sheetMusics = sheetMusicRepository.findAllByTitleContaining(title,pageable);
         List<SheetMusicSearchResponseDto> result = new ArrayList<>();
         sheetMusics.forEach(s -> result.add(SheetMusicSearchResponseDto.toDto(s)));
         return result;
@@ -74,8 +74,8 @@ public class SheetMusicService {
 
     //악보 작곡가로 검색 하기
     @Transactional(readOnly = true)
-    public List<SheetMusicSearchResponseDto> searchWriterSheetMusic(Pageable pageable,SheetMusicSearchRequestDto req) {
-        Page<SheetMusic> sheetMusics = sheetMusicRepository.findAllByWriterContaining(req.getSearchKeyWord(),pageable);
+    public List<SheetMusicSearchResponseDto> searchWriterSheetMusic(Pageable pageable,String writer) {
+        Page<SheetMusic> sheetMusics = sheetMusicRepository.findAllByWriterContaining(writer,pageable);
         List<SheetMusicSearchResponseDto> result = new ArrayList<>();
         sheetMusics.forEach(s -> result.add(SheetMusicSearchResponseDto.toDto(s)));
         return result;

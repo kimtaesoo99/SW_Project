@@ -17,7 +17,7 @@ public class SheetMusicFindAllResponseDto {
     private String title;
 
     @ApiModelProperty(notes = "악보 작곡가", example = "아이유")
-    private String songwriter;
+    private String writer;
 
     public static SheetMusicFindAllResponseDto toDto(SheetMusic sheetMusic) {
         return new SheetMusicFindAllResponseDto(sheetMusic.getTitle(), sheetMusic.getWriter());

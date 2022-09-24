@@ -45,14 +45,14 @@ public class ReviewController {
         return Response.success("리뷰 작성 완료");
     }
 
-    // 리뷰 전체 조회(by 악보)여기도 페이징해야함
+    // 리뷰 전체 조회(by 악보)
     @ApiOperation(value = "해당 악보의 리뷰 전체 조회", notes = "해당 악보의 리뷰를 전체 조회한다.")
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/reviews")
+    @GetMapping("/music/{id}/reviews")
     public Response getReview(@PageableDefault(size = 10,sort = "id",direction = Sort.Direction.DESC) Pageable pageable,
-            @Valid @RequestBody ReviewFindRequestDto req){
+            @PathVariable ("id") Long id){
 
-        return Response.success(reviewService.findReviews(pageable,req));
+        return Response.success(reviewService.findReviews(pageable,id));
     }
     // 리뷰 수정
     @ApiOperation(value = "리뷰 수정", notes = "리뷰를 수정한다.")

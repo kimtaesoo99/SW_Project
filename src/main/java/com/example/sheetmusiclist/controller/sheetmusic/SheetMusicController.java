@@ -45,7 +45,7 @@ public class SheetMusicController {
         return Response.success("악보 등록 완료");
     }
 
-    // 악보 전체 조회 여기 페이징처리해야
+    // 악보 전체 조회
     @ApiOperation(value = "악보 전체 조회", notes = "전체 악보를 조회한다.")
     @GetMapping("/sheetmusics")
     @ResponseStatus(HttpStatus.OK)
@@ -66,20 +66,20 @@ public class SheetMusicController {
 
     //악보 제목으로 검색
     @ApiOperation(value = "악보 제목으로 검색 하기", notes = "악보 제목으로 검색하기.")
-    @GetMapping("/sheetmusics/searchtitle")
+    @GetMapping("/sheetmusics/title/{title}")
     @ResponseStatus(HttpStatus.OK)
     public Response searchTitle(@PageableDefault(size = 10,sort = "id",direction = Sort.Direction.DESC)Pageable pageable,
-            @Valid @RequestBody SheetMusicSearchRequestDto req){
-        return Response.success(sheetMusicService.searchTitleSheetMusic(pageable,req));
+            @PathVariable ("title") String title){
+        return Response.success(sheetMusicService.searchTitleSheetMusic(pageable,title));
     }
 
-    //악보 작곡가로 검색 하기 페이징해야할듯
+    //악보 작곡가로 검색 하기
     @ApiOperation(value = "악보 작곡가로 검색 하기", notes = "악보 작곡가로 검색하기.")
-    @GetMapping("/sheetmusics/searchwriter")
+    @GetMapping("/sheetmusics/writer/{writer}")
     @ResponseStatus(HttpStatus.OK)
-    public Response searchWriter(@PageableDefault(size = 10,sort = "id",direction = Sort.Direction.DESC)Pageable pageable,
-            @Valid @RequestBody SheetMusicSearchRequestDto req){
-        return Response.success(sheetMusicService.searchWriterSheetMusic(pageable,req));
+    public Response searchWriter(@PageableDefault(size = 10,sort = "id",direction = Sort.Direction.DESC) Pageable pageable,
+            @PathVariable("writer") String writer){
+        return Response.success(sheetMusicService.searchWriterSheetMusic(pageable,writer));
     }
 
 

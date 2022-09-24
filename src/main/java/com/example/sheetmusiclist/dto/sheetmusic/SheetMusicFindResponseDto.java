@@ -19,7 +19,7 @@ public class SheetMusicFindResponseDto {
     private String title;
 
     @ApiModelProperty(notes = "악보 작곡가", example = "아이유")
-    private String songwriter;
+    private String writer;
 
     @ApiModelProperty(notes = "악보 등록자", example = "김철수")
     private String nickName;

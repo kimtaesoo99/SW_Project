@@ -134,6 +134,7 @@ public class SheetMusicControllerUnitTest {
     @DisplayName("searchTitlesheetmusic")
     public void searchTitleSheetMusicTest() throws Exception{
         //given
+        String str = "아이유";
         SheetMusicSearchRequestDto req = new SheetMusicSearchRequestDto("a");
         Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "id");
         Page<SheetMusic> result = sheetMusicRepository.findAll(pageable);
@@ -147,7 +148,7 @@ public class SheetMusicControllerUnitTest {
         ).andExpect(status().isOk());
 
         //then
-        verify(sheetMusicService).searchTitleSheetMusic(pageable,req);
+        verify(sheetMusicService).searchTitleSheetMusic(pageable,str);
         assertThat(result).isEqualTo(null);
     }
 
@@ -157,6 +158,8 @@ public class SheetMusicControllerUnitTest {
     @DisplayName("searchWritersheetmusic")
     public void searchWriterSheetMusicTest()throws Exception{
         //given
+
+        String str = "복숭아";
         SheetMusicSearchRequestDto req = new SheetMusicSearchRequestDto("a");
         Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "id");
         Page<SheetMusic> result = sheetMusicRepository.findAll(pageable);
@@ -164,12 +167,10 @@ public class SheetMusicControllerUnitTest {
         //when
         mockMvc.perform(
                 get("/api/sheetmusics/searchwriter")
-                        .content(objectMapper.writeValueAsString(req))
-                        .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
 
         //then
-        verify(sheetMusicService).searchWriterSheetMusic(pageable,req);
+        verify(sheetMusicService).searchWriterSheetMusic(pageable,str);
         assertThat(result).isEqualTo(null);
     }
 

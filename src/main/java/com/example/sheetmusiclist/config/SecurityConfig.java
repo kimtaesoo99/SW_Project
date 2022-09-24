@@ -82,21 +82,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(HttpMethod.POST, "/api/sheetmusics").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.GET, "/api/sheetmusics").access("hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.GET, "/api/sheetmusics/searchtitle").access("hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.GET, "/api/sheetmusics/searchwriter").access("hasRole('ROLE_USER')")
+                .antMatchers(HttpMethod.GET, "/api/sheetmusics/title/{title}").access("hasRole('ROLE_USER')")
+                .antMatchers(HttpMethod.GET, "/api/sheetmusics/writer/{writer}").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.GET, "/api/sheetmusics/{id}").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.PUT, "/api/sheetmusics/{id}").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.DELETE, "/api/sheetmusics/{id}").access("hasRole('ROLE_USER')")
 
                 .antMatchers(HttpMethod.POST, "/api/reviews").access("hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.GET, "/api/reviews").access("hasRole('ROLE_USER')")
+                .antMatchers(HttpMethod.GET, "/api/music/{id}/reviews").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.PUT, "/api/reviews/{id}").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.DELETE, "/api/reviews/{id}").access("hasRole('ROLE_USER')")
-
-                .antMatchers(HttpMethod.POST, "/api/{id}}/reviews").access("hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.GET, "/api/{id}/reviews").access("hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.PUT, "/api/{sheetmusicid}/reviews/{reviewid}").access("hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.DELETE, "/api/{sheetmusicid}/reviews/{reviewid}").access("hasRole('ROLE_USER')")
 
                 .anyRequest().hasAnyRole("ROLE_ADMIN")
 //                .anyRequest().authenticated() // 나머지는 전부 인증 필요
