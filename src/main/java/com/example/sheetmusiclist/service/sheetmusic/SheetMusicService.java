@@ -2,7 +2,7 @@ package com.example.sheetmusiclist.service.sheetmusic;
 
 
 import com.example.sheetmusiclist.dto.sheetmusic.*;
-import com.example.sheetmusiclist.entity.image.Image;
+import com.example.sheetmusiclist.entity.pdf.Pdf;
 import com.example.sheetmusiclist.entity.member.Member;
 import com.example.sheetmusiclist.entity.sheetmusic.SheetMusic;
 import com.example.sheetmusiclist.exception.MemberNotEqualsException;
@@ -33,9 +33,9 @@ public class SheetMusicService {
     // 악보 등록
     @Transactional
     public void createSheetMusic(SheetMusicCreateRequestDto req, Member member) {
-        List<Image> images = req.getImages().stream().map(i -> new Image(i.getOriginalFilename())).collect(toList());
-        SheetMusic sheetMusic = sheetMusicRepository.save(new SheetMusic(member, req.getTitle(), req.getWriter(), images));
-        uploadImages(sheetMusic.getImages(), req.getImages());
+        List<Pdf> pdfs = req.getPdfs().stream().map(i -> new Pdf(i.getOriginalFilename())).collect(toList());
+        SheetMusic sheetMusic = sheetMusicRepository.save(new SheetMusic(member, req.getTitle(), req.getWriter(), pdfs));
+        uploadPdfs(sheetMusic.getPdfs(), req.getPdfs());
 
     }
 
@@ -88,12 +88,13 @@ public class SheetMusicService {
 
         SheetMusic sheetMusic = sheetMusicRepository.findById(id).orElseThrow(SheetMusicNotFoundException::new);
         if (!sheetMusic.getMember().equals(member)) {
-            throw new MemberNotEqualsException();
+            // 로그인 유저(member)랑 이 악보 등록한 사람sheetMusic.getMember()이랑 같은지 다른지 비교
+            throw new MemberNotEqualsException(); 
         }
 
-        SheetMusic.ImageUpdatedResult result = sheetMusic.update(req);
-        uploadImages(result.getAddedImages(), result.getAddedImageFiles());
-        deleteImages(result.getDeletedImages());
+        SheetMusic.PdfUpdatedResult result = sheetMusic.update(req);
+        uploadPdfs(result.getAddedPdfs(), result.getAddedPdfFiles());
+        deletePdfs(result.getDeletedPdfs());
 
     }
 
@@ -111,12 +112,16 @@ public class SheetMusicService {
 
     }
 
-    private void uploadImages(List<Image> images, List<MultipartFile> fileImages) {
-        IntStream.range(0, images.size()).forEach(i -> fileService.upload(fileImages.get(i), images.get(i).getUniqueName()));
+    //requestDto로 들어온 pdf는 multipartfiles인데 이를 stream으로 Pdf엔티디의 데이터 타입으로
+    //바꾸고 Pdf(i.getOriginalFilename()) 메솓를 타고 Pdf 엔티디 정보를 채우고 이를 fileService.upload 메소드에
+    // 웹페이지에서 받아온 pdf의 번호에 맞는 pdf와, 그 번호에 맞는 stream으로 변환해서 그 해당 uniquefilename을 생성한
+    // 그 값을 넘겨준다.
+    private void uploadPdfs(List<Pdf> pdfs, List<MultipartFile> filePdfs) {
+        IntStream.range(0, pdfs.size()).forEach(i -> fileService.upload(filePdfs.get(i), pdfs.get(i).getUniqueName()));
     }
 
-    private void deleteImages(List<Image> images) {
-        images.stream().forEach(i -> fileService.delete(i.getUniqueName()));
+    private void deletePdfs(List<Pdf> pdfs) {
+        pdfs.stream().forEach(i -> fileService.delete(i.getUniqueName()));
     }
 
 }

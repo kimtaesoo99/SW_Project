@@ -30,6 +30,6 @@ public class SheetMusicFindResponseDto {
 
     public static SheetMusicFindResponseDto toDto(SheetMusic sheetMusic) {
         return new SheetMusicFindResponseDto(sheetMusic.getTitle(), sheetMusic.getWriter(),
-                sheetMusic.getMember().getNickname(),sheetMusic.getImages().stream().map(i->ImageDto.toDto(i)).collect(Collectors.toList()));
+                sheetMusic.getMember().getNickname(),sheetMusic.getPdfs().stream().map(i->ImageDto.toDto(i)).collect(Collectors.toList()));
     }
 }

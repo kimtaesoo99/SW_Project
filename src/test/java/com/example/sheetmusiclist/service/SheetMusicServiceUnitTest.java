@@ -58,7 +58,7 @@ public class SheetMusicServiceUnitTest {
         Member member = createMember();
 
         given(sheetMusicRepository.save(any())).willReturn(createSheetMusicWithImages(
-                createMember(), IntStream.range(0, req.getImages().size()).mapToObj(i -> createImage()).collect(toList()))
+                createMember(), IntStream.range(0, req.getPdfs().size()).mapToObj(i -> createImage()).collect(toList()))
         );
 
         // when

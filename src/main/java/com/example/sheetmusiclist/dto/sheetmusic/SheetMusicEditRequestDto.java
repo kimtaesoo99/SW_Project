@@ -1,7 +1,6 @@
 package com.example.sheetmusiclist.dto.sheetmusic;
 
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,9 +22,8 @@ public class SheetMusicEditRequestDto {
     @NotBlank(message = "작곡가를 입력해주세요")
     private String writer;
 
+    private List<MultipartFile> addedPdfs = new ArrayList<>();
 
-    private List<MultipartFile> addedImages = new ArrayList<>();
-
-    private List<Integer> deletedImages = new ArrayList<>();
+    private List<Integer> deletedPdfs = new ArrayList<>();
 
 }

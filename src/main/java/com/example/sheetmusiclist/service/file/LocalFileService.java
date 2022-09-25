@@ -13,10 +13,10 @@ import java.io.IOException;
 
 @Service
 @Slf4j
-@PropertySource("classpath:image.properties")
+@PropertySource("classpath:pdf.properties")
 public class LocalFileService implements FileService{
 
-    @Value("${upload.image.location}")
+    @Value("${upload.pdf.location}")
     private String location;
 
     @PostConstruct
@@ -31,14 +31,19 @@ public class LocalFileService implements FileService{
     public void upload(MultipartFile file, String filename) {
         try {
             file.transferTo(new File(location + filename));
+            // file.transferTo로 파일을 저장한다.
         } catch(IOException e) {
             throw new FileUploadFailureException();
+            // 예외 처리
+            // 이에 해당하는 상황은? uniquename으로 만들었는데?
         }
     }
 
     @Override
     public void delete(String filename) {
         new File(location + filename).delete();
+        // File file = new File(location + filename)
+        // file.delete()랑 같으 코드
     }
 }
 

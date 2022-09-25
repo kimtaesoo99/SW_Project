@@ -18,12 +18,12 @@ import java.time.Duration;
 @EnableWebMvc
 @Configuration
 @RequiredArgsConstructor
-@PropertySource("classpath:image.properties")
+@PropertySource("classpath:pdf.properties")
 public class WebConfig implements WebMvcConfigurer {
     private final MessageSource messageSource;
 
-    @Value("${upload.image.location}")
-    private String location;
+    @Value("${upload.pdf.location}")
+    private String location = System.getProperty("user.dif") + "\\sre\\main\\resources\\static\\files";
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

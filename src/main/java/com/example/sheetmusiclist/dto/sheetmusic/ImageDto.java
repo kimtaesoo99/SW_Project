@@ -2,9 +2,8 @@
 package com.example.sheetmusiclist.dto.sheetmusic;
 
 
-import com.example.sheetmusiclist.entity.image.Image;
+import com.example.sheetmusiclist.entity.pdf.Pdf;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +20,7 @@ public class ImageDto {
     @ApiModelProperty(notes = "악보 변환 이름", example = "123213.jpg")
     private String uniqueName;
 
-    public static ImageDto toDto(Image image){
+    public static ImageDto toDto(Pdf image){
         return new ImageDto(image.getId(),image.getOriginName(),image.getUniqueName());
     }
 }

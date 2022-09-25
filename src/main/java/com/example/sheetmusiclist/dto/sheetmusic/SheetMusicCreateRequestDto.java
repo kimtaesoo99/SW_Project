@@ -25,6 +25,6 @@ public class SheetMusicCreateRequestDto {
     private String writer;
 
     @ApiModelProperty(value = "이미지", notes = "이미지를 넣어주세요.", required = true, example = "김승민사진")
-    private List<MultipartFile> images = new ArrayList<>();
+    private List<MultipartFile> pdfs = new ArrayList<>();
 
 }

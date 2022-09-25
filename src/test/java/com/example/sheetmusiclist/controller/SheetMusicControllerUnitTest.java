@@ -15,7 +15,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -93,7 +92,7 @@ public class SheetMusicControllerUnitTest {
                 .andExpect(status().isCreated());
 
         //then
-        assertThat(req.getImages().size()).isEqualTo(2);
+        assertThat(req.getPdfs().size()).isEqualTo(2);
     }
 
     //악보 전체조회
@@ -211,7 +210,7 @@ public class SheetMusicControllerUnitTest {
                 .andExpect(status().isOk());
 
         // then
-        assertThat(req.getAddedImages().size()).isEqualTo(2);
+        assertThat(req.getAddedPdfs().size()).isEqualTo(2);
         verify(sheetMusicService).editSheetMusic(id,member,req);
     }
 
