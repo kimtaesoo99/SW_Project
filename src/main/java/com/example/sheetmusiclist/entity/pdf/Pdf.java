@@ -2,10 +2,7 @@ package com.example.sheetmusiclist.entity.pdf;
 import com.example.sheetmusiclist.entity.common.EntityDate;
 import com.example.sheetmusiclist.entity.sheetmusic.SheetMusic;
 import com.example.sheetmusiclist.exception.UnsupportedImageFormatException;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
@@ -14,7 +11,8 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class Pdf extends EntityDate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
