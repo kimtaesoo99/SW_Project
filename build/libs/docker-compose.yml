@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  mysqldb:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: swproject
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+
+  backend:
+    build: .
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/swproject
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysqldb

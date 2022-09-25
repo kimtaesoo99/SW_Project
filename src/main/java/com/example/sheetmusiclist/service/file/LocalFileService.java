@@ -16,8 +16,10 @@ import java.io.IOException;
 @PropertySource("classpath:pdf.properties")
 public class LocalFileService implements FileService{
 
+
     @Value("${upload.pdf.location}")
-    private String location;
+    private String locationTemp;
+    String location = System.getProperty("user.dir") + "/src/main/resources/pdfs/";
 
     @PostConstruct
     void postConstruct() {
