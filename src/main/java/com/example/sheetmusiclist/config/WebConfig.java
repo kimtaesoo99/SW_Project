@@ -22,12 +22,12 @@ import java.time.Duration;
 public class WebConfig implements WebMvcConfigurer {
     private final MessageSource messageSource;
 
-    @Value("${upload.pdf.location}")
-    private String location = System.getProperty("user.dif") + "\\sre\\main\\resources\\static\\files";
+    String location = System.getProperty("user.dir") + "/src/main/resources/pdfs/";
+
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/image/**")
+        registry.addResourceHandler("/pdfs/**")
                 .addResourceLocations("file:" + location)
                 .setCacheControl(CacheControl.maxAge(Duration.ofHours(1L)).cachePublic());
     }
